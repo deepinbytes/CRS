@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ABC_CRSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="CourseCode" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="255" />
+          <Property Name="CompanyUEN" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OrganizationSize" Type="int" />
+          <Property Name="CompanyAddress" Type="varchar" MaxLength="255" />
+          <Property Name="Country" Type="varchar" MaxLength="255" />
+          <Property Name="PostalCode" Type="int" />
+        </EntityType>
+        <EntityType Name="CompanyHR">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="HRName" Type="varchar" MaxLength="255" />
+          <Property Name="CompanyID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="255" />
+          <Property Name="JobTitle" Type="varchar" MaxLength="255" />
+          <Property Name="HREmail" Type="varchar" MaxLength="225" />
+          <Property Name="ContactNumber" Type="int" />
+          <Property Name="FaxNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseCode" />
+          </Key>
+          <Property Name="CourseCode" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CourseTitle" Type="varchar" MaxLength="255" />
+          <Property Name="CourseDescription" Type="varchar" MaxLength="255" />
+          <Property Name="Fees" Type="int" />
+          <Property Name="Instructors" Type="varchar" MaxLength="255" />
+          <Property Name="NoOfDays" Type="int" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Salutation" Type="varchar" MaxLength="255" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" />
+          <Property Name="Gender" Type="varchar" MaxLength="255" />
+          <Property Name="Nationality" Type="varchar" MaxLength="255" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="ContactNumber" Type="int" />
+          <Property Name="EmployementStatus" Type="varchar" MaxLength="225" />
+          <Property Name="CompanyID" Type="varchar" MaxLength="255" />
+          <Property Name="ComapanyName" Type="varchar" MaxLength="255" />
+          <Property Name="OrganizationSize" Type="int" />
+          <Property Name="JobTitle" Type="varchar" MaxLength="255" />
+          <Property Name="Department" Type="varchar" MaxLength="255" />
+          <Property Name="SalaryRange" Type="int" />
+          <Property Name="DietaryRequirement" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="PID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" />
+          <Property Name="Sponsorship" Type="varchar" MaxLength="255" />
+          <Property Name="EmployementStatus" Type="varchar" MaxLength="225" />
+          <Property Name="BillingPersonName" Type="varchar" MaxLength="255" />
+          <Property Name="BillingAddress" Type="varchar" MaxLength="255" />
+          <Property Name="BillingCountry" Type="varchar" MaxLength="255" />
+          <Property Name="BillingPostalCode" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__Class__CourseCod__1273C1CD">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseCode" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="CourseCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CompanyHR__Compa__1A14E395">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="CompanyHR" Type="Self.CompanyHR" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="CompanyHR">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Participa__Compa__173876EA">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registrat__Class__1CF15040">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registratio__PID__1DE57479">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ABC_CRSModelStoreContainer">
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyHR" EntityType="Self.CompanyHR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Class__CourseCod__1273C1CD" Association="Self.FK__Class__CourseCod__1273C1CD">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyHR__Compa__1A14E395" Association="Self.FK__CompanyHR__Compa__1A14E395">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyHR" EntitySet="CompanyHR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Participa__Compa__173876EA" Association="Self.FK__Participa__Compa__173876EA">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Participant" EntitySet="Participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registrat__Class__1CF15040" Association="Self.FK__Registrat__Class__1CF15040">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registratio__PID__1DE57479" Association="Self.FK__Registratio__PID__1DE57479">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ABC_CRSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="CourseCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Class__CourseCod__1273C1CD" FromRole="Class" ToRole="Course" />
+          <NavigationProperty Name="Registration" Relationship="Self.FK__Registrat__Class__1CF15040" FromRole="Class" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyUEN" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrganizationSize" Type="Int32" />
+          <Property Name="CompanyAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="Int32" />
+          <NavigationProperty Name="CompanyHR" Relationship="Self.FK__CompanyHR__Compa__1A14E395" FromRole="Company" ToRole="CompanyHR" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__Compa__173876EA" FromRole="Company" ToRole="Participant" />
+        </EntityType>
+        <EntityType Name="CompanyHR">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="HRName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="HREmail" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="Int32" />
+          <Property Name="FaxNumber" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__CompanyHR__Compa__1A14E395" FromRole="CompanyHR" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseCode" />
+          </Key>
+          <Property Name="CourseCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CourseDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fees" Type="Int32" />
+          <Property Name="Instructors" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoOfDays" Type="Int32" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Class__CourseCod__1273C1CD" FromRole="Course" ToRole="Class" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salutation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nationality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="Int32" />
+          <Property Name="EmployementStatus" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ComapanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationSize" Type="Int32" />
+          <Property Name="JobTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SalaryRange" Type="Int32" />
+          <Property Name="DietaryRequirement" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Participa__Compa__173876EA" FromRole="Participant" ToRole="Company" />
+          <NavigationProperty Name="Registrations" Relationship="Self.FK__Registratio__PID__1DE57479" FromRole="Participant" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="PID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sponsorship" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EmployementStatus" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="BillingPersonName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BillingAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BillingCountry" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BillingPostalCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Registrat__Class__1CF15040" FromRole="Registration" ToRole="Class" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK__Registratio__PID__1DE57479" FromRole="Registration" ToRole="Participant" />
+        </EntityType>
+        <Association Name="FK__Class__CourseCod__1273C1CD">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseCode" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="CourseCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registrat__Class__1CF15040">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CompanyHR__Compa__1A14E395">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="CompanyHR" Type="Self.CompanyHR" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="CompanyHR">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Participa__Compa__173876EA">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registratio__PID__1DE57479">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ABC_CRSEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="CompanyHRs" EntityType="Self.CompanyHR" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="Participants" EntityType="Self.Participant" />
+          <EntitySet Name="Registrations" EntityType="Self.Registration" />
+          <AssociationSet Name="FK__Class__CourseCod__1273C1CD" Association="Self.FK__Class__CourseCod__1273C1CD">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registrat__Class__1CF15040" Association="Self.FK__Registrat__Class__1CF15040">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyHR__Compa__1A14E395" Association="Self.FK__CompanyHR__Compa__1A14E395">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyHR" EntitySet="CompanyHRs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Participa__Compa__173876EA" Association="Self.FK__Participa__Compa__173876EA">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Participant" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registratio__PID__1DE57479" Association="Self.FK__Registratio__PID__1DE57479">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ABC_CRSModelStoreContainer" CdmEntityContainer="ABC_CRSEntities2">
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="ABC_CRSModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="ABC_CRSModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyUEN" ColumnName="CompanyUEN" />
+                <ScalarProperty Name="OrganizationSize" ColumnName="OrganizationSize" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyHRs">
+            <EntityTypeMapping TypeName="ABC_CRSModel.CompanyHR">
+              <MappingFragment StoreEntitySet="CompanyHR">
+                <ScalarProperty Name="HRName" ColumnName="HRName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="HREmail" ColumnName="HREmail" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="ABC_CRSModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseTitle" ColumnName="CourseTitle" />
+                <ScalarProperty Name="CourseDescription" ColumnName="CourseDescription" />
+                <ScalarProperty Name="Fees" ColumnName="Fees" />
+                <ScalarProperty Name="Instructors" ColumnName="Instructors" />
+                <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="ABC_CRSModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="ABC_CRSModel.Participant">
+              <MappingFragment StoreEntitySet="Participant">
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="Salutation" ColumnName="Salutation" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="EmployementStatus" ColumnName="EmployementStatus" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ComapanyName" ColumnName="ComapanyName" />
+                <ScalarProperty Name="OrganizationSize" ColumnName="OrganizationSize" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="SalaryRange" ColumnName="SalaryRange" />
+                <ScalarProperty Name="DietaryRequirement" ColumnName="DietaryRequirement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registrations">
+            <EntityTypeMapping TypeName="ABC_CRSModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Sponsorship" ColumnName="Sponsorship" />
+                <ScalarProperty Name="EmployementStatus" ColumnName="EmployementStatus" />
+                <ScalarProperty Name="BillingPersonName" ColumnName="BillingPersonName" />
+                <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+                <ScalarProperty Name="BillingCountry" ColumnName="BillingCountry" />
+                <ScalarProperty Name="BillingPostalCode" ColumnName="BillingPostalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
